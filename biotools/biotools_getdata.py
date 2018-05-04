@@ -53,7 +53,7 @@ def open_fasta(filename, return_type):
 
 def parse_fasta(data, return_type):
     ''' Takes a string in FASTA format and returns FASTA IDs and/or sequences.
-    Returned values are based on return_type argument: return_type is eitherr
+    Returned values are based on return_type argument: return_type is either
     "fasta", "seqs", "both".  Returned values are lists, or a tuple of lists.
     '''
     fasta_ids = []

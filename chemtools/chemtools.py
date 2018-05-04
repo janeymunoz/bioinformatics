@@ -61,7 +61,11 @@ def parse_atom_data(return_type):
     "weight" or "number".
     '''
     # Read atomic weights/number data from text file.
-    f = open("atomic_weights.txt", "r")
+    import os
+    file_dir = os.path.dirname(__file__)
+    rel_path = 'ref_tables/atomic_weights.txt'
+    abs_path = os.path.join(file_dir, rel_path)
+    f = open(abs_path, "r")
     data = f.readlines()
     # Parse data and create key/values based on return_type.
     atom_dict = {}

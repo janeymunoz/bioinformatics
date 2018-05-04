@@ -4,7 +4,11 @@ def mk_rna_aa_dict():
     value = corresponding amino acid
     '''
     from biotools_getdata import open_read
-    data = open_read('rna_codon_table.txt')
+    import os
+    file_dir = os.path.dirname(__file__)
+    rel_path = 'ref_tables/rna_codon_table.txt'
+    abs_path = os.path.join(file_dir, rel_path)
+    data = open_read(abs_path)
     rna_codon_dict = {}
     for i in range(0, len(data)):
         line = data[i].split()
@@ -16,7 +20,11 @@ def mk_rna_aa_dict():
 def mk_peptide_mass_dict():
     ''' Returns a dictionary of peptides and their mass value in Daltons. '''
     from biotools_getdata import open_read
-    data = open_read('monoisotopic_mass_table.txt')
+    import os
+    file_dir = os.path.dirname(__file__)
+    rel_path = 'ref_tables/monoisotopic_mass_table.txt'
+    abs_path = os.path.join(file_dir, rel_path)
+    data = open_read(abs_path)
     monomass_dict = {}
     for i in range(0, len(data)):
         cur_pair = data[i][:-1]
