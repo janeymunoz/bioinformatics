@@ -1,7 +1,7 @@
 # bioinformatics
 _A set of tools for the acquisition and analysis of biological data._
 
-This repository contains the tools I have made as an amatuer/aspring bioinformatician and coder! Although the functions of these tools can likely be found in existing sources, I felt that it would be beneficial to have a go at creating my own, since I could benefit from the coding experience. 
+This repository contains the tools I have made as an amatuer/aspiring bioinformatician and coder! Although the functions of these tools can likely be found in existing sources, I felt that it would be beneficial to have a go at creating my own, since I could benefit from the coding experience. 
 
 The bulk of the repository is housed in the [biotools](biotools) folder, where there are scripts that: 
 - Aquire online genomics data
