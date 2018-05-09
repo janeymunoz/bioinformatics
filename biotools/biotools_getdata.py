@@ -1,14 +1,14 @@
 def open_read(filename):
     ''' Reads a text file and stores each line as an item in a list. '''
-    f = open(filename, 'r')
-    data = f.read().splitlines()
+    with open(filename, 'r') as f:
+        data = f.read().splitlines()
     return data
 
 
 def open_txt_1str(filename):
     ''' Reads text file, returns one continuous string without linebreaks. '''
-    f = open(filename, 'r')
-    tot_str = f.read().replace("\n", "")
+    with open(filename, 'r') as f:
+        tot_str = f.read().replace("\n", "")
     return tot_str
 
 
@@ -22,25 +22,24 @@ def open_fasta(filename, return_type):
     seq_str = ""
     fasta_count = 0
     seq_count = 0
-    f = open(filename, 'r')
-    for line in f:
-        cur_line = line[:-1]
-        if "\n" in cur_line:
-            cur_line = cur_line[:-1]
-        else:
-            if ">" in cur_line:
-                fasta_ids.append(cur_line[1:])
-                fasta_count += 1
+    with open(filename, 'r') as f:
+        for line in f:
+            cur_line = line[:-1]
+            if "\n" in cur_line:
+                cur_line = cur_line[:-1]
             else:
-                if fasta_count == seq_count + 1:
-                    seq_str += cur_line
+                if ">" in cur_line:
+                    fasta_ids.append(cur_line[1:])
+                    fasta_count += 1
                 else:
-                    seq_strs.append(seq_str)
-                    seq_count += 1
-                    seq_str = ""
-                    seq_str += cur_line
-    seq_strs.append(seq_str)
-    f.close()
+                    if fasta_count == seq_count + 1:
+                        seq_str += cur_line
+                    else:
+                        seq_strs.append(seq_str)
+                        seq_count += 1
+                        seq_str = ""
+                        seq_str += cur_line
+        seq_strs.append(seq_str)
     if return_type.lower() == "fasta":
         return fasta_ids
     elif return_type.lower() == "seq":
@@ -99,6 +98,22 @@ def uniprot_get(uni_id):
     return fasta_data
 
 
+def check_seq(seq, seq_type):
+    ''' Checks if all characters are valid DNA or RNA bases in string.
+    Will check for DNA if seq_type="DNA" or RNA if seq_type="RNA".
+    '''
+    # Get relevant alphabet based on seq_type.
+    if seq_type.upper() == "DNA":
+        check = set("ATGC")
+    elif seq_type.upper() == "RNA":
+        check = set("AUGC")
+    else:
+        raise ValueError('the seq_type arg. must be either "RNA" or "DNA".')
+    # Check seq against check alphabet.
+    leftover = set(seq.upper()) - check
+    return not leftover
+
+
 def walk_str(str, block_size, offset):
     ''' Walks a string, returns a list of substrings.
     Size of substring and offset of walk must be specified as arguments.
@@ -107,7 +122,7 @@ def walk_str(str, block_size, offset):
     offset_end = len_str - block_size
     str_blocks = []
     if block_size > len_str:
-        return "length of string must be greater than the block size"
+        raise ValueError("length of string must be greater than block size.")
     elif block_size == len_str:
         str_blocks.append(str)
         return str_blocks
@@ -127,11 +142,11 @@ def list_to_matr(whol_list, num_rows):
     nums_in_row = len_list // num_rows
     matr_list = []
     if num_rows < 1:
-        return "Arg error: the number of rows must be greater than 0."
+        raise ValueError("the number of rows must be greater than 0.")
     elif num_rows == 1:
         return whol_list
     elif len_list % num_rows != 0:
-        return "Arg error: length of list modulo number of rows must be 0."
+        raise ValueError("length of list modulo number of rows must be 0.")
     else:
         for i in range(0, num_rows):
             sub_list = "sub_" + str(i)
