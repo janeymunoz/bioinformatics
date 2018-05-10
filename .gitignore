@@ -2,3 +2,6 @@
 [._]*.sw[a-p]
 [._]s[a-v][a-z]
 [._]s[a-p]
+
+__pycache__/
+*.py[cod]
