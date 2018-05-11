@@ -166,3 +166,37 @@ def trans_ratio(s1, s2):
             print("Number of transversions: 0")
             print("Ratio of transistions to transversions not calculatable.")
             return transitions, transversions
+
+
+def count_motif(seq, check_motif):
+    '''Counts the number of times a motif appears in a sequence.'''
+    from biotools_getdata import walk_str
+    # Count number of times check_motif found and log indices.
+    len_motif = len(check_motif)
+    motifs = walk_str(seq, len_motif, 1)
+    num_motifs = len(motifs)
+    count = 0
+    indx = []
+    for i in range(0, num_motifs):
+        motif = motifs[i]
+        if motif == check_motif:
+            count += 1
+            indx.append(i)
+        else:
+            continue
+    return count, indx
+
+
+def count_motif_fr(seq, check_motif):
+    '''Checks a sequence for a motif in forwards and reverse direction .'''
+    # Forward check.
+    for_data = count_motif(seq, check_motif)
+    for_count = for_data[0]
+    for_indx = for_data[1]
+    # Reverse check.
+    rev_seq = seq[::-1]
+    rev_data = count_motif(rev_seq, check_motif)
+    rev_count = rev_data[0]
+    rev_indx = rev_data[1]
+    # Return counts.
+    return for_count, for_indx, rev_count, rev_indx
