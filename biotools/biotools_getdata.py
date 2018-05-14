@@ -98,14 +98,14 @@ def uniprot_get(uni_id):
     return fasta_data
 
 
-def check_seq(seq, seq_type):
+def check_seq(seq, str_type):
     ''' Checks if all characters are valid DNA or RNA bases in string.
     Will check for DNA if seq_type="DNA" or RNA if seq_type="RNA".
     '''
     # Get relevant alphabet based on seq_type.
-    if seq_type.upper() == "DNA":
+    if str_type.upper() == "DNA":
         check = set("ATGC")
-    elif seq_type.upper() == "RNA":
+    elif str_type.upper() == "RNA":
         check = set("AUGC")
     else:
         raise ValueError('the seq_type arg. must be either "RNA" or "DNA".')
