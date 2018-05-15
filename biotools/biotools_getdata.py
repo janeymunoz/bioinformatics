@@ -133,6 +133,24 @@ def walk_str(str, block_size, offset):
     return str_blocks
 
 
+def walk_vert(matrix, block_size, offset):
+    '''Walks through the columns of a matrix, returns a list of adjacent values.
+    Matrix is a list of sublists, each sublist being a row.
+    '''
+    num_rows = len(matrix)
+    num_cols = len(matrix[0])
+    offset_end = num_rows - block_size
+    col_blocks = []
+    for k in range(0, num_cols):
+        for i in range(0, offset_end + 1, offset):
+            col_list = []
+            for j in range(0, block_size):
+                val = matrix[0 + i + j][0 + k]
+                col_list.append(val)
+            col_blocks.append(col_list)
+    return col_blocks
+
+
 def list_to_matr(whol_list, num_rows):
     ''' Takes a list of integers and returns a matrix (lists within a list).
     The number of rows must be specified as an argument, and the length of the
